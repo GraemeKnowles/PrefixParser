@@ -12,7 +12,8 @@ PrefixParser is a recursive descent parser and converter that is designed to con
 
 #### Use
 - This program is meant to be compiled into a .jar and interacted with through the command line. 
-- Included in the repository are two scripts, windowsBuild.bat and unixBuild.sh that can be run to compile the jar file. 
+- The .jar can be found in the [latest release](https://github.com/GraemeKnowles/PrefixParser/releases/latest).
+- Included in the repository are two scripts, windowsBuild.bat and unixBuild.sh that can be run to compile the jar file from scratch. 
 
 ```
 Usage Syntax:
@@ -28,4 +29,4 @@ java -jar PrefixParser.jar -e | --examples [--wolfram | --desmos | --geogebra] [
 ```
 
 #### Limitations
-- Basic support for safe divide (as used in fungp) is included. The parser can handle cases like x/0 (and will replace it with x/1), however it does not evaluate or reduce the equation and cannot handle more complex cases like 1/(1-1) or 1/(x-x). In these cases it will simply output them as they are.
+Basic support for safe divide (as used in fungp) is included. The parser can handle cases like x/0 (and will replace it with x/1), however it does not evaluate or reduce the equation and cannot handle more complex cases like 1/(1-1) or 1/(x-x). In these cases it will simply output them as they are.

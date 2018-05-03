@@ -8,11 +8,11 @@ import java.util.Queue;
 // This is a recursive descent parser based on the following Infix Grammar.
 
 // expression ::= "(", (function | operator) ,")"
-// function ::= validName, {" ", term}
+// function ::= validName, {{" "}, {term}}
 // validName ::= validChar, {validChar}
 // validChar ::= a-z | A-Z | 0-9 | _ | . | /
-// term ::= param | expression
-// operator ::= operatorName, " ", term, " ", term
+// term ::= param |  expression
+// operator ::= operatorName, {" "}, param, {" "}, param
 // operatorName ::= + | - | / | * 
 // param ::= validName
 

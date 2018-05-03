@@ -2,7 +2,7 @@ package prefixParser;
 
 import java.util.List;
 
-// operator ::= operatorName, " ", term, " ", term
+// operator ::= operatorName, {" "}, param, {" "}, param
 // operatorName ::= + | - | / | * 
 class BinaryOperator extends Function {
 

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-// function ::= validName, {" ", term}
+// function ::= validName, {{" "}, {term}}
 class Function extends Token {
 
 	public static Function parse(InputScanner input) {
@@ -30,17 +30,15 @@ class Function extends Token {
 
 	protected void parseTerms(InputScanner input) {
 		do {
-			char nextChar = input.peekNext();
-			if (nextChar == ' ') {
-				input.moveNext();
-				if (Term.isFirstCharValid(input.peekNext())) {
-					this.addTerm(Term.parse(input));
-				} else {
-					return;
-				}
+			// ignore whitespace
+			for(char nextChar = input.peekNext(); nextChar == ' '; input.moveNext(), nextChar = input.peekNext());
+
+			if (Term.isFirstCharValid(input.peekNext())) {
+				this.addTerm(Term.parse(input));
 			} else {
 				return;
 			}
+
 		} while (true);
 	}
 

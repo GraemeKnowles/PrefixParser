@@ -177,8 +177,17 @@ public class Parser {
 		
 		if(params.size() > paramsToSwitchTo.length) {
 			// Number of parameters too long to display in 3d.
-			// throw error?
-			return;
+			System.out.println("Too many different parameters, can only display x and y, try using Wolfram.");
+			
+			String error;
+			
+			if(params.size() == 3) {
+				error = "This parser cannot evaluate and solve for a parameter, cannot convert to f(x,y).";
+			} else {
+				error = "This equation cannot be displayed in 3 dimensional space.";
+			}
+			
+			throw new IllegalArgumentException(error);
 		}
 		
 		for(int i = 0; i < params.size(); ++i) {

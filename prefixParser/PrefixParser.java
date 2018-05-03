@@ -149,20 +149,20 @@ public class PrefixParser {
 	
 	static private void runExamples(Arguments options) {
 		Parser p = new Parser(options.verbose, options.grapher);
-		
-		String[] tests = {
-				"(+ (* (* c c) c) (+ (* c c) (+ (+ (+ c (- a (fungp.util/sdiv b 0.0))) c) c))))",
-				"(+ (* (* c c) c) (+ (dec c) (+ (+ (+ c (- a (- b 0.0))) c) c))))", 
-				"(mod (inc (dec (abs (gcd a b)))) a)",
-				"(+ stuff b)",
-				"(fungp.util/sdiv (Math/sin (fungp.util/sdiv (Math/sin 0.9) 0.0)) (inc (Math/sin (Math/sin x))))",
-				"(fungp.util/sdiv (* (fungp.util/abs 8.0) x) (* (inc (+ (+ (fungp.util/sdiv 7.0 1.0) (+ 7.0 y))(* (dec x) (dec y))))(fungp.util/abs (fungp.util/abs (- (- y y) (fungp.util/abs y))))))"
-		};
 
-		for(int i = 0; i < tests.length; ++i) {
+		String[] tests = { "(+ (* (* c c) c) (+ (* c c) (+ (+ (+ c (- a (fungp.util/sdiv b 0.0))) c) c))))",
+				"(+ (* (* c c) c) (+ (dec c) (+ (+ (+ c (- a (- b 0.0))) c) c))))",
+				"(mod (inc (dec (abs (gcd a b)))) a)", "(+ stuff b)",
+				"(fungp.util/sdiv (Math/sin (fungp.util/sdiv (Math/sin 0.9) 0.0)) (inc (Math/sin (Math/sin x))))",
+				"(fungp.util/sdiv (* (fungp.util/abs 8.0) x) (* (inc (+ (+ (fungp.util/sdiv 7.0 1.0) (+ 7.0 y))(* (dec x) (dec y))))(fungp.util/abs (fungp.util/abs (- (- y y) (fungp.util/abs y))))))" };
+
+		for (int i = 0; i < tests.length; ++i) {
 			System.out.println("Test " + i + ": " + tests[i]);
-			p.parse(tests[i]);
-			System.out.println("Result: " + p.toInfix() + "\n");
+			if(p.parse(tests[i])) {
+				System.out.println("Result: " + p.toInfix() + "\n");
+			}else {
+				System.out.println();
+			}
 		}
 	}
 }

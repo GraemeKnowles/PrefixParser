@@ -17,8 +17,8 @@ public class PrefixParser {
 	static final String examplesShort = "-e";
 	static final String examplesLong = "--examples";
 	static final String prefixParser = "java -jar PrefixParser.jar";
-	
-	static class Arguments{
+
+	static class Arguments {
 		public Grapher grapher;
 		boolean verbose;
 		String equation;
@@ -26,127 +26,88 @@ public class PrefixParser {
 		boolean runExample;
 	}
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		Arguments options = new Arguments();
 		getOptions(args, options);
-		
-		if(options.runExample) {
+
+		if (options.runExample) {
 			runExamples(options);
 			return;
 		}
-		
-		if(options.exitProgram) {
+
+		if (options.exitProgram) {
 			return;
 		}
-		
+
 		Parser p = new Parser(options.verbose, options.grapher);
 		p.parse(options.equation);
 		System.out.println(p.toInfix());
 	}
-	
-	static void getOptions(String[] arguments, Arguments options) {
+
+	private static void getOptions(String[] arguments, Arguments options) {
 		options.equation = "";
 		options.exitProgram = false;
 		options.verbose = false;
 		options.grapher = Grapher.WOLFRAM;
-		
+		options.runExample = false;
+
 		List<String> argList = Arrays.asList(arguments);
 		Iterator<String> argIterator = argList.iterator();
-		
+
 		// If no arguments, print help
 		if (arguments.length == 0) {
 			printHelp();
 			options.exitProgram = true;
 			return;
 		}
-		
-		
-		String firstArg = "";
-		
-		if(argIterator.hasNext()) {
-			firstArg = argIterator.next();
-		}
-		
-		String grapherArg = firstArg;
-		
-		// Check for help option
-		if(arguments.length == 0 || firstArg.compareTo(helpShort) == 0 || firstArg.compareTo(helpLong) == 0) {
-			printHelp();
-			options.exitProgram = true;
-			return;
-		}
-		
-		if(firstArg.compareTo(examplesShort) == 0 || firstArg.compareTo(examplesLong) == 0) {
-			options.runExample = true;
-			if(argIterator.hasNext()) {
-				grapherArg = argIterator.next();
-			}
-		}
-		
-		options.verbose = false;
-		String verboseArg = null;
-		// Get grapher option
-		if(grapherArg.compareTo(wolframLong) == 0) {
-			options.grapher = Grapher.WOLFRAM;
-		}else if(grapherArg.compareTo(desmosLong) == 0) {
-			options.grapher = Grapher.DESMOS;
-		} else if (grapherArg.compareTo(geogebraLong) == 0) {
-			options.grapher = Grapher.GEOGEBRA;
-		}else {// If no grapher specified, use default
-			options.grapher = Grapher.WOLFRAM;
-			verboseArg = grapherArg;
-		}
-		
-		// If the verbose arg isn't set, test for it
-		boolean hasVerbose = false;
-		if(verboseArg == null) {
-			if(argIterator.hasNext()) {
-				verboseArg = argIterator.next();
-				hasVerbose = true;
-			}
-		}else {
-			hasVerbose = true;
-		}
-		
-		if(hasVerbose) {
-			if(verboseArg.compareTo(verboseLong) == 0 || verboseArg.compareTo(verboseShort) == 0) {
+
+		while (argIterator.hasNext()) {
+			String arg = argIterator.next();
+			if (arg.compareTo(helpShort) == 0 || arg.compareTo(helpLong) == 0) {
+				printHelp();
+				options.exitProgram = true;
+				break;
+			} else if (arg.compareTo(verboseShort) == 0 || arg.compareTo(verboseLong) == 0) {
 				options.verbose = true;
-			}else {// If the arg isn't verbose, assume it's part of the equation
-				options.equation += verboseArg + " ";
+			} else if (arg.compareTo(wolframLong) == 0) {
+				options.grapher = Grapher.WOLFRAM;
+			} else if (arg.compareTo(desmosLong) == 0) {
+				options.grapher = Grapher.DESMOS;
+			} else if (arg.compareTo(geogebraLong) == 0) {
+				options.grapher = Grapher.GEOGEBRA;
+			} else if (arg.compareTo(examplesShort) == 0 || arg.compareTo(examplesLong) == 0) {
+				options.runExample = true;
+			} else {
+				while (argIterator.hasNext()) {
+					options.equation += argIterator.next() + " ";
+				}
+				 break;
 			}
-		} else {
-			options.equation += verboseArg + " ";
 		}
-		
-		while(argIterator.hasNext()) {
-			options.equation += argIterator.next() + " ";
-		}
-		
-		options.exitProgram = false;
 	}
-	
-	static void printHelp(){
+
+	static void printHelp() {
 		String[] helpText = {
 				"Welcome to the fungp prefix parser. This program converts the prefix output of fungp and allows for output in infix.",
 				"Infix is needed for many graphing calculators, many of which also have different support for various function names.",
 				"Included in this program are options to tailor the output to work with various graphing calculators.",
-				"\nUsage Syntax: ",
-				prefixParser + " " + helpShort + " | " + helpLong,
+				"\nUsage Syntax: ", prefixParser + " " + helpShort + " | " + helpLong,
 				" " + helpShort + " " + helpLong + "       : Display help text that you're currently reading.",
-				prefixParser + " " + "[" + wolframLong + " | " + desmosLong + " | " + geogebraLong + "] [" + verboseShort + " | " + verboseLong + "] equation",
+				prefixParser + " " + "[" + wolframLong + " | " + desmosLong + " | " + geogebraLong + "] ["
+						+ verboseShort + " | " + verboseLong + "] equation",
 				" " + wolframLong + "       : Configure for WolframAlpha, this is the default if not specified.",
 				" " + desmosLong + "        : Configure for Desmos",
 				" " + geogebraLong + "      : Configure for GeoGebra",
 				" " + verboseShort + " " + verboseLong + "    : Output descriptive error information",
-				prefixParser + " " + examplesShort + " | " + examplesLong + " [" + wolframLong + " | " + desmosLong + " | " + geogebraLong + "] [" + verboseShort + " | " + verboseLong + "]",
-				" Run example equations with options"
-		};
-		
-		for(String line : helpText) {
+				prefixParser + " " + examplesShort + " | " + examplesLong + " [" + wolframLong + " | " + desmosLong
+						+ " | " + geogebraLong + "] [" + verboseShort + " | " + verboseLong + "]",
+				" Run example equations with options" };
+
+		for (String line : helpText) {
 			System.out.println(line);
 		}
 	}
-	
+
 	static private void runExamples(Arguments options) {
 		Parser p = new Parser(options.verbose, options.grapher);
 

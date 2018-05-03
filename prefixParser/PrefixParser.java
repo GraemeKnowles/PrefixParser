@@ -16,7 +16,7 @@ public class PrefixParser {
 	static final String geogebraLong = "--geogebra";
 	static final String examplesShort = "-e";
 	static final String examplesLong = "--examples";
-	static final String prefixParser = "PrefixParser";
+	static final String prefixParser = "java -jar PrefixParser.jar";
 	
 	static class Arguments{
 		public Grapher grapher;

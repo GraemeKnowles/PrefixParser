@@ -8,7 +8,7 @@ PrefixParser is a recursive descent parser and converter that is designed to con
 - [Geogebra](https://www.geogebra.org/graphing)
 
 #### Requirements
-- [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) or above.
+- [Java 7](https://java.com/en/download/) or above.
 
 #### Use
 - This program is meant to be compiled into a .jar and interacted with through the command line. 

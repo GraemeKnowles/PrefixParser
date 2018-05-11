@@ -16,10 +16,11 @@ PrefixParser is a recursive descent parser and converter that is designed to con
 - Included in the repository are two scripts, windowsBuild.bat and unixBuild.sh that can be run to compile the jar file from scratch. 
 
 ```
+- Note: not using quotes around the equation may break parsing. * Is used as a wildcard by the system.
 Usage Syntax:
 java -jar PrefixParser.jar -h | --help
  -h --help       : Display help text that you're currently reading.
-java -jar PrefixParser.jar [--wolfram | --desmos | --geogebra] [-v | --verbose] equation
+java -jar PrefixParser.jar [--wolfram | --desmos | --geogebra] [-v | --verbose] "equation"
  --wolfram       : Configure for WolframAlpha, this is the default if not specified.
  --desmos        : Configure for Desmos
  --geogebra      : Configure for GeoGebra

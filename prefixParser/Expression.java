@@ -10,7 +10,12 @@ class Expression extends Token {
 	public static Expression parse(InputScanner input) {
 		Expression e = new Expression();
 		if (input.moveNext() == '(') {
+			while(input.peekNext() == ' ') {
+				input.moveNext();
+			}
+			
 			char peekNext = input.peekNext();
+			
 			if (OperatorName.isFirstCharValid(peekNext)) {
 				e.function = BinaryOperator.parse(input);
 			} else if (Function.isFirstCharValid(peekNext)) {

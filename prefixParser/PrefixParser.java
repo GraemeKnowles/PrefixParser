@@ -16,10 +16,9 @@ public class PrefixParser {
 	static final String geogebraLong = "--geogebra";
 	static final String examplesShort = "-e";
 	static final String examplesLong = "--examples";
-	static final String prefixParser = "java -jar PrefixParser.jar";
+	static final String jarName = "PrefixParser.jar";
+	static final String prefixParser = "java -jar " + jarName;
 	static final String classPathErrorCatch = ".classpath";
-	static final String projectErrorCatch = ".project";
-	static final String settingsErrorCatch = ".settings";
 
 	static class Arguments {
 		public Grapher grapher;
@@ -87,8 +86,7 @@ public class PrefixParser {
 				}
 				
 				if(options.equation.contains(classPathErrorCatch) 
-						|| options.equation.contains(projectErrorCatch) 
-						|| options.equation.contains(settingsErrorCatch) ){
+						|| options.equation.contains(jarName) ){
 					System.out.println("Equation parse error, put quotes around the equation and try again");
 					options.exitProgram = true;
 				}

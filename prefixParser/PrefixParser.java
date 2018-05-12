@@ -1,5 +1,7 @@
 package prefixParser;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +20,6 @@ public class PrefixParser {
 	static final String examplesLong = "--examples";
 	static final String jarName = "PrefixParser.jar";
 	static final String prefixParser = "java -jar " + jarName;
-	static final String classPathErrorCatch = ".classpath";
 
 	static class Arguments {
 		public Grapher grapher;
@@ -85,10 +86,18 @@ public class PrefixParser {
 					options.equation += argIterator.next() + " ";
 				}
 				
-				if(options.equation.contains(classPathErrorCatch) 
-						|| options.equation.contains(jarName) ){
-					System.out.println("Equation parse error, put quotes around the equation and try again");
-					options.exitProgram = true;
+				// This is a roundabout way to check if the equation being parsed in may have been 
+				// corrupted from the fact that * is a wildcard on many systems. When it does occur,
+				// * is replaced by a list of every file/folder in the system. This checks if the first
+				// file in the system is found anywhere in the input equation.
+				
+				File folder = new File(Paths.get("").toAbsolutePath().toString());
+				File[] listOfFiles = folder.listFiles();
+				if(listOfFiles.length > 0) {
+					if(options.equation.contains(listOfFiles[0].getName())){
+						System.out.println("Equation parse error, put quotes around the equation and try again");
+						options.exitProgram = true;
+					}
 				}
 				
 				break;
